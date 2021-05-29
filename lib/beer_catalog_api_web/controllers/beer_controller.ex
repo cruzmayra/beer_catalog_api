@@ -1,15 +1,23 @@
 defmodule BeerCatalogApiWeb.BeerController do
   use BeerCatalogApiWeb, :controller
+  use PhoenixSwagger
 
   alias BeerCatalogApi.Catalog
   alias BeerCatalogApi.Catalog.Beer
 
   action_fallback BeerCatalogApiWeb.FallbackController
 
+  swagger_path :index do
+    get("/api/beers")
+    description("List of beers")
+    response(:ok, "Success")
+  end
+
   def index(conn, _params) do
     beers = Catalog.list_beers()
     render(conn, "index.json", beers: beers)
   end
+
 
   def create(conn, %{"beer" => beer_params}) do
     with {:ok, %Beer{} = beer} <- Catalog.create_beer(beer_params) do

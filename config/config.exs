@@ -29,3 +29,16 @@ config :phoenix, :json_library, Jason
 # Import environment specific config. This must remain at the bottom
 # of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"
+
+# Especificar el archivo de salida, router y endpoint modules que
+# genera el archivo de swagger
+config :beer_catalog_api, :phoenix_swagger,
+  swagger_files: %{
+    "priv/static/swagger.json" => [
+      router: BeerCatalogApiWeb.Router, # phoenix routes will be converted to swagger paths
+      endpoint: BeerCatalogApiWeb.Endpoint # (optional) endpoint config used to set host, port and https schemes.
+    ]
+  }
+
+# Configuramos Swagger para usar Jason como su librería de JSON
+config :phoenix_swagger, json_library: Jason

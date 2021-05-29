@@ -26,6 +26,33 @@ defmodule BeerCatalogApiWeb.Router do
     resources "/beers", BeerController, except: [:new, :edit]
   end
 
+
+  scope "/api/swagger" do
+    forward "/", PhoenixSwagger.Plug.SwaggerUI, otp_app: :beer_catalog_api, swagger_file: "swagger.json"
+  end
+
+  # Outline del documento de swagger con la información de mi api
+  def swagger_info do
+    %{
+      schemes: ["http", "https", "ws", "wss"],
+      info: %{
+        version: "1.0",
+        title: "Beer Catalog API",
+        description: "First exercise with Phoenix Framework",
+        termOfService: "Open for public",
+        contact: %{
+          name: "Mayra Cruz",
+          email: "velazquez.leonora@gmail.com"
+        }
+      },
+      consumes: ["application/json"],
+      produces: ["application/json"],
+      tags: [
+        %{name: "Beers", description: "Beer info"}
+      ]
+    }
+  end
+
   # Enables LiveDashboard only for development
   #
   # If you want to use the LiveDashboard in production, you should put
