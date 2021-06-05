@@ -23,7 +23,9 @@ defmodule BeerCatalogApiWeb.Router do
   scope "/api", BeerCatalogApiWeb do
     pipe_through :api
 
-    resources "/beers", BeerController, except: [:new, :edit]
+    get "/beers", BeerController, :index
+    post "/beers", BeerController, :create
+    get "/beers/:id", BeerController, :show
   end
 
 
